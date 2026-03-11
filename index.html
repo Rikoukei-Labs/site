@@ -1,589 +1,540 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RIKOUKEI LABS - Marine Multi-Omics</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="stylesheet.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rikoukei Labs — Software &amp; Games Built for the Long Run</title>
+<meta name="description" content="Rikoukei Labs builds software and games with resilience and long-term maintainability at the core. Applications, research tools, and institutional systems that hold up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loader-ring"></div>
-        <div class="loading-text">Loading...</div>
+
+<!-- Grain overlay via inline SVG filter -->
+<svg class="grain" aria-hidden="true">
+  <filter id="grain-filter">
+    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#grain-filter)"/>
+</svg>
+
+<!-- Scan-line parallax layer -->
+<div class="scan-layer" aria-hidden="true"></div>
+<div class="grid-layer" aria-hidden="true"></div>
+
+<!-- Custom cursor -->
+<div class="cursor-reticle" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<!-- ========== NAV ========== -->
+<nav id="nav">
+  <div class="nav-left">
+    <img src="assets/logo.jpeg" alt="Rikoukei Labs logo" class="nav-logo">
+    <a href="#" class="nav-brand">Rikoukei Labs</a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="hero">
+  <div class="hero-circuit" aria-hidden="true">
+    <svg viewBox="0 0 600 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Circuit trace lines -->
+      <line x1="100" y1="0" x2="100" y2="300" stroke="#be5cd8" stroke-width="1"/>
+      <line x1="100" y1="300" x2="300" y2="300" stroke="#be5cd8" stroke-width="1"/>
+      <line x1="300" y1="300" x2="300" y2="500" stroke="#be5cd8" stroke-width="1"/>
+      <line x1="300" y1="500" x2="500" y2="500" stroke="#be5cd8" stroke-width="1"/>
+      <line x1="200" y1="100" x2="200" y2="600" stroke="#be5cd8" stroke-width="0.5"/>
+      <line x1="400" y1="50" x2="400" y2="700" stroke="#be5cd8" stroke-width="0.5"/>
+      <line x1="50" y1="200" x2="550" y2="200" stroke="#be5cd8" stroke-width="0.5"/>
+      <line x1="50" y1="450" x2="550" y2="450" stroke="#be5cd8" stroke-width="0.5"/>
+      <line x1="500" y1="100" x2="500" y2="400" stroke="#be5cd8" stroke-width="1"/>
+      <line x1="500" y1="400" x2="350" y2="400" stroke="#be5cd8" stroke-width="1"/>
+      <line x1="150" y1="550" x2="450" y2="550" stroke="#be5cd8" stroke-width="0.5"/>
+      <line x1="150" y1="550" x2="150" y2="750" stroke="#be5cd8" stroke-width="0.5"/>
+      <!-- Nodes -->
+      <circle cx="100" cy="300" r="4" fill="#be5cd8"/>
+      <circle cx="300" cy="300" r="3" fill="#be5cd8"/>
+      <circle cx="300" cy="500" r="4" fill="#be5cd8"/>
+      <circle cx="500" cy="500" r="3" fill="#be5cd8"/>
+      <circle cx="500" cy="400" r="4" fill="#be5cd8"/>
+      <circle cx="200" cy="200" r="3" fill="#be5cd8"/>
+      <circle cx="400" cy="450" r="3" fill="#be5cd8"/>
+      <rect x="195" y="595" width="10" height="10" stroke="#be5cd8" stroke-width="1" fill="none"/>
+      <rect x="345" y="395" width="10" height="10" stroke="#be5cd8" stroke-width="1" fill="none"/>
+    </svg>
+  </div>
+
+  <h1 class="hero-title" id="hero-title">
+    <span class="word">RIKOUKEI</span><br>
+    <span class="word">LABS</span>
+  </h1>
+  <p class="hero-tagline" id="hero-tagline"></p>
+  <p class="hero-sub" id="hero-sub"></p>
+  <div id="hero-mesh" class="hero-mesh" aria-hidden="true"></div>
+  <div class="hero-border-accent" aria-hidden="true"></div>
+</section>
+
+<!-- ========== PRODUCTS ========== -->
+<section class="products" id="products">
+  <h2 class="section-header" data-glitch>Products</h2>
+  <div class="products-grid">
+
+    <article class="product-card slide-left" style="--card-tilt: -0.6deg;">
+      <span class="card-label">Live. Scaled. Stable.</span>
+      <h3 class="card-title">Index</h3>
+      <p class="card-desc">A QR-based meal allowance and attendance system for universities. Already running — tested with 400 students in a real deployment.</p>
+      <span class="card-status">// deployed</span>
+    </article>
+
+    <article class="product-card slide-right" style="--card-tilt: 0.7deg;">
+      <span class="card-label">Open collaboration. Closed data.</span>
+      <h3 class="card-title">MisakaNet</h3>
+      <p class="card-desc">A research collaboration framework that lets labs share findings without handing over raw data. Useful when IP protection matters but collaboration still needs to happen.</p>
+      <span class="card-status">// in development</span>
+    </article>
+
+    <article class="product-card slide-left" style="--card-tilt: -0.5deg;">
+      <span class="card-label">Less document. More clarity.</span>
+      <h3 class="card-title">Bilaar</h3>
+      <p class="card-desc">Reads long documents and pulls out what actually matters. No summaries padded with filler — just the signal, not the noise.</p>
+      <span class="card-status">// in development</span>
+    </article>
+
+  </div>
+</section>
+
+<!-- ========== ABOUT ========== -->
+<section class="about" id="about">
+  <div class="about-content">
+    <div class="about-header-col">
+      <h2 class="section-header" data-glitch>About</h2>
     </div>
-
-    <!-- Ambient Background -->
-    <div class="ambient-bg">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+    <div class="about-text-col">
+      <p>We've spent a lot of time thinking about what makes software fail. Rikoukei Labs exists because we'd rather build things that don't.</p>
+      <p>Our work spans research tools, institutional systems, and games — the common thread is that we care about what happens after launch.</p>
     </div>
+  </div>
+  <hr class="grid-divider" aria-hidden="true">
+</section>
 
-    <!-- Grid Overlay -->
-    <div class="grid-overlay"></div>
-
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Header -->
-        <div class="header" id="mainHeader">
-            <div class="logo">
-                <img src="images/logo.png" alt="RIKOUKEI LABS" class="logo-image">
-            </div>
-            <h1 class="brand-name">RIKOUKEI LABS</h1>
-            <p class="tagline">Computational Solutions for Coral & Marine Multi-Omics</p>
-        </div>
-
-        <!-- Menu Grid -->
-        <div class="menu-grid" id="menuGrid">
-            <div class="menu-item initial-load" data-section="introduction">
-                <div class="menu-badge">OV</div>
-                <div class="menu-title">Overview</div>
-            </div>
-            <div class="menu-item initial-load" data-section="services">
-                <div class="menu-badge">SL</div>
-                <div class="menu-title">Solutions</div>
-            </div>
-            <div class="menu-item initial-load" data-section="gallery">
-                <div class="menu-badge">PP</div>
-                <div class="menu-title">Pilot Programs</div>
-            </div>
-            <div class="menu-item initial-load" data-section="testimonials">
-                <div class="menu-badge">TM</div>
-                <div class="menu-title">The Team</div>
-            </div>
-            <div class="menu-item initial-load" data-section="about">
-                <div class="menu-badge">MsN</div>
-                <div class="menu-title">About MisakaNet</div>
-            </div>
-            <div class="menu-item initial-load" data-section="contact">
-                <div class="menu-badge">CT</div>
-                <div class="menu-title">Contact</div>
-            </div>
-        </div>
-
-        <!-- Content Sections -->
-        <div id="contentArea">
-            <!-- Introduction Section -->
-            <div class="content-section" id="introduction">
-                <div class="section-header-small">
-                    <div class="small-logo">
-                        <img src="images/logo.png" alt="RIKOUKEI LABS">
-                    </div>
-                    <div class="small-brand">
-                        <h3>RIKOUKEI LABS</h3>
-                        <p>Multi-Omic Services</p>
-                    </div>
-                </div>
-                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
-                
-                <!-- Hero Banner -->
-                <div class="intro-hero">
-                    <div class="intro-hero-content">
-                        <span class="intro-badge">Est. 2025</span>
-                        <h1 class="intro-headline">Accelerating Coral & Marine<br><span>Resilience</span> Through Multi-Omics.</h1>
-                        <p class="intro-subtext">Rikoukei Labs excels in innovating research infrastructure and empowers multi-omic analysis by architecting bleeding edge software solutions.</p>
-                        <div class="intro-cta-group">
-                            <!-- <button class="intro-cta-primary">Explore Our Work</button>
-                            <button class="intro-cta-secondary">Watch Showreel</button> -->
-                        </div>
-                    </div>
-                    <div class="intro-hero-visual">
-                        <div class="intro-floating-card card-1">
-                            <span class="card-icon">🧬</span>
-                            <span class="card-text">Privacy Focused</span>
-                        </div>
-                        <div class="intro-floating-card card-2">
-                            <span class="card-icon">🔒</span>
-                            <span class="card-text">Privacy-Preserving</span>
-                        </div>
-                        <div class="intro-floating-card card-3">
-                            <span class="card-icon">☁️</span>
-                            <span class="card-text">Reproducible Pipelines</span>
-                        </div>
-                        <div class="intro-orb"></div>
-                    </div>
-                </div>
-
-                <!-- Metrics Strip -->
-                <div class="intro-metrics">
-                    <div class="metric-item">
-                        <span class="metric-value">50+</span>
-                        <span class="metric-label">Dynamic Node Scaling — Highlights the ability to handle bursty genomic workloads without paying for idle infra.</span>
-                    </div>
-                    <div class="metric-divider"></div>
-                    <div class="metric-item">
-                        <span class="metric-value">99.9%</span>
-                        <span class="metric-label">SLA Availability — Standards-based commitment to research uptime and system reliability.</span>
-                    </div>
-                    <div class="metric-divider"></div>
-                    <div class="metric-item">
-                        <span class="metric-value">MsN</span>
-                        <span class="metric-label">Privacy Framework — Distributed Learning as a core feature for secure collaboration.</span>
-                    </div>
-                    <div class="metric-divider"></div>
-                    <div class="metric-item">
-                        <span class="metric-value">CI/CD</span>
-                        <span class="metric-label">Reproducible Pipelines — Gold-standard automation for peer-reviewed scientific results.</span>
-                    </div>
-                </div>
-
-                <!-- Core Values -->
-                <div class="intro-values">
-                    <div class="value-card">
-                        <div class="value-number">01</div>
-                        <h3>Reproducibility First</h3>
-                        <p>In bioinformatics, a result is only as good as its provenance. We architect platforms with containerized workflows and immutable infrastructure so every coral & marine analysis is 100% reproducible.</p>
-                    </div>
-                    <div class="value-card">
-                        <div class="value-number">02</div>
-                        <h3>Biologically Informed</h3>
-                        <p>We don't just process data; we understand the organism. Engineers fluent in multi-omics and systems biology bridge code and marine research.</p>
-                    </div>
-                    <div class="value-card">
-                        <div class="value-number">03</div>
-                        <h3>Resilience Engineered</h3>
-                        <p>Applying Chaos Engineering to environmental data. Distributed systems maintain performance under heavy loads so research never halts from system failure.</p>
-                    </div>
-                </div>
-
-                <!-- Tech Stack Preview -->
-                <div class="intro-tech">
-                    <p class="tech-label">Technologies We Master</p>
-                    <div class="tech-marquee">
-                        <div class="tech-track">
-                            <span class="tech-item">TensorFlow</span>
-                            <span class="tech-item">PyTorch</span>
-                            <span class="tech-item">scikit-learn</span>
-                            <span class="tech-item">Keras</span>
-                            <span class="tech-item">OpenCV-Python</span>
-                            <span class="tech-item">LightGBM</span>
-                            <span class="tech-item">XGBoost</span>
-                            <span class="tech-item">TensorFlow Federated (TFF)</span>
-                            <span class="tech-item">Flower</span>
-                            <span class="tech-item">NVFlare</span>
-                            <span class="tech-item">Edge Computing</span>
-                            <span class="tech-item">Research Infrastructure</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Services Section -->
-            <div class="content-section" id="services">
-                <div class="section-header-small">
-                    <div class="small-logo">
-                        <img src="images/logo.png" alt="RIKOUKEI LABS">
-                    </div>
-                    <div class="small-brand">
-                        <h3>RIKOUKEI LABS</h3>
-                        <p>Multi-Omic Services</p>
-                    </div>
-                </div>
-                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
-
-                <div class="section-header">
-                    <h2 class="section-title">Solutions & Services</h2>
-                    <p class="section-subtitle">Take a look at the rich suite of services we offer for empowering multi-omic research in the GCC and beyond.</p>
-                </div>
-
-                <div class="tabs-container">
-                    <div class="tab-buttons">
-                        <button class="tab-btn active" onclick="switchTab(this, 'datapipeline')">Data and pipeline services</button>
-                        <button class="tab-btn" onclick="switchTab(this, 'it')">General IT Services</button>
-                    </div>
-
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="datapipeline">
-                            <div class="services-list">
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop" alt="Data stewardship">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>FAIR - DSaS (Data Stewardship as a Service)</h4>
-                                        <p>We don't just process data; we engineer it for immediate interoperability. Our stewardship ensures your datasets are structurally sound, fully annotated, and optimized for complex multi-omic integration and peer-reviewed validation.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=300&fit=crop" alt="Research environments">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>Zero-Config Research Environments</h4>
-                                        <p>Pre-built, sandboxed environments with every tool (Nextflow, R, Python, etc.) already optimized for high-performance computing clusters.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop" alt="Nix deployment">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>Nix-Based Bare Metal Deployment</h4>
-                                        <p>Using Nix, we deploy immutable research stacks directly to your hardware, providing 100% reproducibility across your entire dependency chain; down to the system libraries. We can extend this to deploying NixOS clusters as well, providing the highest levels of stability and reproducibility.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="it">
-                            <div class="services-list">
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop" alt="LIMS">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>Tailored LIMS (Laboratory Information Management System)</h4>
-                                        <p>A LIMS specifically designed for marine biology, with custom fields for reef metadata and seamless tracking from the sea to the sequencer.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                                <div class="service-row">
-                                    <div class="service-row-icon">
-                                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop" alt="Dashboards">
-                                    </div>
-                                    <div class="service-row-content">
-                                        <h4>Predictive Cost/Time Dashboards</h4>
-                                        <p>Before you run a pipeline, know exactly how much it will cost and how long it will take. We integrate with your existing SAP S4Hana or PowerBI systems to provide real-time ROI on your compute spend.</p>
-                                    </div>
-                                    <div class="service-row-arrow">→</div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="content-section" id="gallery">
-                <div class="section-header-small">
-                    <div class="small-logo">
-                        <img src="images/logo.png" alt="RIKOUKEI LABS">
-                    </div>
-                    <div class="small-brand">
-                        <h3>RIKOUKEI LABS</h3>
-                        <p>Multi-Omic Services</p>
-                    </div>
-                </div>
-                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
-
-                <div class="section-header">
-                    <h2 class="section-title">Pilot Programs</h2>
-                    <p class="section-subtitle">Be among the first to try out our computational research infrastructure solutions.</p>
-                </div>
-
-                <!-- Commented out gallery items -->
-                <!--
-                <div class="filter-buttons">
-                    <button class="filter-btn active" onclick="filterGallery('all', this)">All</button>
-                    <button class="filter-btn" onclick="filterGallery('web', this)">Web</button>
-                    <button class="filter-btn" onclick="filterGallery('mobile', this)">Mobile</button>
-                    <button class="filter-btn" onclick="filterGallery('branding', this)">Branding</button>
-                </div>
-
-                <div class="gallery-grid">
-                    <div class="gallery-item" data-category="web">
-                        <img src="images/coding-screen.jpg" alt="Project 1">
-                        <div class="gallery-overlay">
-                            <h4>E-Commerce Platform</h4>
-                            <p>Web Development</p>
-                        </div>
-                    </div>
-                    <div class="gallery-item" data-category="mobile">
-                        <img src="images/ai-mobile-app.jpg" alt="Project 2">
-                        <div class="gallery-overlay">
-                            <h4>Fitness App</h4>
-                            <p>Mobile Development</p>
-                        </div>
-                    </div>
-                    <div class="gallery-item" data-category="branding">
-                        <img src="images/brand-identity.jpg" alt="Project 3">
-                        <div class="gallery-overlay">
-                            <h4>Brand Identity</h4>
-                            <p>Design & Branding</p>
-                        </div>
-                    </div>
-                    <div class="gallery-item" data-category="web">
-                        <img src="images/managed-service.jpg" alt="Project 4">
-                        <div class="gallery-overlay">
-                            <h4>Analytics Dashboard</h4>
-                            <p>Web Application</p>
-                        </div>
-                    </div>
-                    <div class="gallery-item" data-category="mobile">
-                        <img src="images/ai-optimized-templates.jpg" alt="Project 5">
-                        <div class="gallery-overlay">
-                            <h4>Banking App</h4>
-                            <p>Mobile Development</p>
-                        </div>
-                    </div>
-                    <div class="gallery-item" data-category="branding">
-                        <img src="images/digital-strategy.jpg" alt="Project 6">
-                        <div class="gallery-overlay">
-                            <h4>Startup Branding</h4>
-                            <p>Design & Identity</p>
-                        </div>
-                    </div>
-                </div>
-                -->
-
-                <div class="pilot-programs-content" style="text-align: center; font-size: 1.5em;">
-                    <p>We conduct heavily discounted* pilot programs for Universities and Research laboratories. Our portfolio is still very young and growing rapidly.</p>
-                    <p style="font-size: 0.6em; margin-top: 20px;">* terms and conditions may apply</p>
-                    <button class="back-btn" style="margin-top: 290px;" onclick="document.getElementById('gallery').classList.remove('active'); setTimeout(() => showSection('contact'), 50);">Contact for a pilot</button>
-                </div>
-            </div>
-
-            <!-- Testimonials Section -->
-            <div class="content-section" id="testimonials">
-                <div class="section-header-small">
-                    <div class="small-logo">
-                        <img src="images/logo.png" alt="RIKOUKEI LABS">
-                    </div>
-                    <div class="small-brand">
-                        <h3>RIKOUKEI LABS</h3>
-                        <p>Multi-Omic Services</p>
-                    </div>
-                </div>
-                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
-
-                <div class="section-header">
-                    <h2 class="section-title">The Team</h2>
-                    <p class="section-subtitle">Meet the brains behind Rikoukei.</p>
-                </div>
-
-                <div class="section-header" style="margin-top: 40px;">
-                    <h3 style="font-size: 1.5em; margin-bottom: 20px;">Core Members</h3>
-                </div>
-
-                <div class="testimonials-grid">
-                     <div class="testimonial-card">
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <img src="images/Sam Victor.jpg" alt="Sam Victor">
-                            </div>
-                            <div class="author-info">
-                                <h5>Sam Victor</h5>
-                                <p>Systems and Computational Biology Methods Architect & Researcher</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <img src="images/Swarn.png" alt="Swarn S.W.">
-                            </div>
-                            <div class="author-info">
-                                <h5>Swarn S.W.</h5>
-                                <p>Machine Learning and Computer Vision Engineer & researcher</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-header" style="margin-top: 40px;">
-                    <h3 style="font-size: 1.5em; margin-bottom: 20px;">Core Advisors</h3>
-                </div>
-
-                <div class="testimonials-grid">
-                     <div class="testimonial-card">
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <img src="images/Saqib-Ahmad.png" alt="Saqib Ahmed">
-                            </div>
-                            <div class="author-info">
-                                <h5>Saqib Ahmed</h5>
-                                <p>ex-Portsmouth Uni, ex-Glasgow Uni applied physics researcher/engineer</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <img src="images/Victor Daniel Raj.png" alt="Victor Daniel Raj">
-                            </div>
-                            <div class="author-info">
-                                <h5>Victor Daniel Raj</h5>
-                                <p>Senior software administrator & Data Analyst, KAUST (Saudi Arabia)</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <img src="images/Mayank Lakhani.png" alt="Mayank Lakhani">
-                            </div>
-                            <div class="author-info">
-                                <h5>Mayank Lakhani</h5>
-                                <p>ex-IIT, ex-Mastercard associate consultant (B2B), Bengaluru, India</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <img src="images/Arijit Bhattacharjee.png" alt="Arijit Bhattacharjee">
-                            </div>
-                            <div class="author-info">
-                                <h5>Arijit Bhattacharjee</h5>
-                                <p>ex-NIT, Optum (UnitedHealth) senior software developer, Bengaluru, India</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <img src="images/Shantanu Durgvanshi.png" alt="Shantanu Durgvanshi">
-                            </div>
-                            <div class="author-info">
-                                <h5>Shantanu Durgvanshi</h5>
-                                <p>Freiburg University PhD candidate (neurosciences + optogenetics), Germany</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <img src="images/Ayush Vats.png" alt="Ayush Vats">
-                            </div>
-                            <div class="author-info">
-                                <h5>Ayush Vats</h5>
-                                <p>ex-HCL senior manager</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <img src="images/Durgesh%20Singh.png" alt="Durgesh Singh">
-                            </div>
-                            <div class="author-info">
-                                <h5>Durgesh Singh</h5>
-                                <p>Full stack and blockchain software developer</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- About Section -->
-            <div class="content-section" id="about">
-                <div class="section-header-small">
-                    <div class="small-logo">
-                        <img src="images/logo.png" alt="RIKOUKEI LABS">
-                    </div>
-                    <div class="small-brand">
-                        <h3>RIKOUKEI LABS</h3>
-                        <p>Multi-Omic Services</p>
-                    </div>
-                </div>
-                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
-
-                <div class="section-header">
-                    <h2 class="section-title">What is MisakaNet</h2>
-                    <p class="section-subtitle">Our flagship distributed learning engine, for Marine and coral multi-omics</p>
-                </div>
-
-                <div class="about-content">
-                    <div class="about-text">
-                        <h3>Overview</h3>
-                        <p>MisakaNet is a privacy-first integration engine designed to bridge the gap between institutional data silos and collective discovery. By utilizing Distributed Learning, MisakaNet allows multiple entities to build high-performance multi-omic models while ensuring that raw multi-omic data never leaves the host institution.</p>
-                        <ul>
-                        <h3>The Rikoukei Trust Protocol</h3>
-
-                            <li><strong>Zero-Data Policy:</strong> We do not—and technically cannot—store your raw research data on our local servers. All analysis is performed within your own Local Omics Node (LON).</li>
-                            <li><strong>Encrypted Intelligence:</strong> MisakaNet incorporates modern privacy-respecting standards and homomorphic encryption to ensure that even the statistical abstractions remain private.</li>
-                            <li><strong>Legal Protection:</strong> All software and collaborative engagements are protected under UAE Commercial Software Law, providing a robust legal framework for international and domestic partnerships.</li>
-                            <li><strong>Data Sovereignty by Design:</strong> Institutions retain 100% ownership and control over their datasets. MisakaNet treats your data as a sovereign asset, not a commodity.</li>
-                        </ul>
-                        <h3>Current Applications</h3>
-                        <ul>
-                            <li><strong>Red Sea Coral Revival:</strong> Managing complex multi-institution data across the Middle East for bleaching risk modeling.</li>
-                            <li><strong>Domain-Aware Encoders:</strong> Utilizing specialized biological abstraction layers for Cnidarian host and Symbiodiniaceae research.</li>
-                        </ul>
-                        <blockquote>"MisakaNet is built for the reality of modern research: where the value is in the insight, but the power remains with the owner."</blockquote>
-                    </div>
-                    <div class="about-image">
-                        <img src="images/MisakaNet.jpeg" alt="Multi-Omic Services lab setup">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contact Section -->
-            <div class="content-section" id="contact">
-                <div class="section-header-small">
-                    <div class="small-logo">
-                        <img src="images/logo.png" alt="RIKOUKEI LABS">
-                    </div>
-                    <div class="small-brand">
-                        <h3>RIKOUKEI LABS</h3>
-                        <p>Multi-Omic Services</p>
-                    </div>
-                </div>
-                <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
-
-                <div class="section-header">
-                    <h2 class="section-title">Contact Us</h2>
-                    <p class="section-subtitle">Contact us for a pilot program, or to enquire about software or research infrastructure availability</p>
-                </div>
-
-                <div class="contact-grid">
-                    <div class="contact-form">
-                        <div class="form-group">
-                            <input type="text" placeholder="Your Name">
-                        </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="Your Email">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Subject">
-                        </div>
-                        <div class="form-group">
-                            <textarea placeholder="Your Message"></textarea>
-                        </div>
-                        <button class="submit-btn">Send Message</button>
-                    </div>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <div class="contact-icon">📍</div>
-                            <div class="contact-details">
-                                <h4>Location</h4>
-                                <p>VUET2289 Compass building, Al Hulaila Industrial Zone, RAK, UAE</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">📧</div>
-                            <div class="contact-details">
-                                <h4>Email - Lead International Relations Manager, Swarn S.W.</h4>
-                                <p>swarn.sw@rikoukeilabs.com</p>
-                            </div>
-                        </div>
-                        <!-- <div class="contact-item">
-                            <div class="contact-icon">📞</div>
-                            <div class="contact-details">
-                                <h4>Phone</h4>
-                                <p>+971 2 555 1234</p>
-                            </div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer class="footer" id="mainFooter">
-            <p>© 2025-2026 RIKOUKEI LABS FZ-LLC.</p>
-        </footer>
+<!-- ========== CONTACT ========== -->
+<section class="contact" id="contact">
+  <h2 class="section-header" data-glitch>Contact</h2>
+  <div class="contact-block">
+    <div class="contact-line">
+      <span class="contact-prompt">&gt;</span>
+      <span>contact <span class="contact-flag">--email</span> <a href="mailto:swarn.sw@rikoukeilabs.com">swarn.sw@rikoukeilabs.com</a></span>
     </div>
-<script src="scripts.js"></script>
+    <div class="contact-line">
+      <span class="contact-prompt">&gt;</span>
+      <span>contact <span class="contact-flag">--github</span> <a href="https://github.com/Rikoukei-Labs">github.com/Rikoukei-Labs</a></span>
+    </div>
+    <div class="contact-line">
+      <span class="contact-prompt">&gt;</span>
+      <span>contact <span class="contact-flag">--linkedin</span> <a href="https://www.linkedin.com/company/rikoukei-labs/">linkedin.com/company/rikoukei-labs</a></span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  &copy; 2025 Rikoukei Labs.
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ========== CUSTOM CURSOR ========== */
+  const reticle = document.querySelector('.cursor-reticle');
+  const ring = document.querySelector('.cursor-ring');
+  let mouseX = -100, mouseY = -100;
+  let ringX = -100, ringY = -100;
+
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    reticle.style.transform = 'translate(' + mouseX + 'px, ' + mouseY + 'px) translate(-50%, -50%)';
+  }, { passive: true });
+
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.15;
+    ringY += (mouseY - ringY) * 0.15;
+    ring.style.transform = 'translate(' + ringX + 'px, ' + ringY + 'px) translate(-50%, -50%)';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  /* ========== HERO BOOT SEQUENCE ========== */
+  var titleEl = document.getElementById('hero-title');
+  var taglineEl = document.getElementById('hero-tagline');
+  var subEl = document.getElementById('hero-sub');
+
+  var titleWords = titleEl.querySelectorAll('.word');
+
+  var taglineText = "We make things that hold up.";
+  var subText = "Software and games built for the long run — not just the launch.";
+
+  function wrapWords(text) {
+    return text.split(' ').map(function(w) {
+      return '<span class="word">' + w + '</span>';
+    }).join(' ');
+  }
+
+  taglineEl.innerHTML = wrapWords(taglineText);
+  subEl.innerHTML = wrapWords(subText);
+
+  var allWords = [];
+  titleWords.forEach(function(w) { allWords.push(w); });
+  taglineEl.querySelectorAll('.word').forEach(function(w) { allWords.push(w); });
+  subEl.querySelectorAll('.word').forEach(function(w) { allWords.push(w); });
+
+  var baseDelay = 200;
+  var wordDelay = 90;
+
+  allWords.forEach(function(word, i) {
+    setTimeout(function() {
+      word.classList.add('revealed');
+    }, baseDelay + i * wordDelay);
+  });
+
+  /* ========== NAV SCROLL STATE ========== */
+  var nav = document.getElementById('nav');
+  var hero = document.getElementById('hero');
+
+  var navObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        nav.classList.remove('nav-scrolled');
+      } else {
+        nav.classList.add('nav-scrolled');
+      }
+    });
+  }, { threshold: 0, rootMargin: '-56px 0px 0px 0px' });
+
+  navObserver.observe(hero);
+
+  /* ========== PRODUCT CARD SCROLL ANIMATION ========== */
+  var cards = document.querySelectorAll('.product-card');
+
+  var cardObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('card-visible');
+        cardObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  cards.forEach(function(card) {
+    cardObserver.observe(card);
+  });
+
+  /* ========== SECTION HEADER GLITCH ========== */
+  var headers = document.querySelectorAll('[data-glitch]');
+
+  var glitchObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('glitch-active');
+        glitchObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  headers.forEach(function(h) {
+    glitchObserver.observe(h);
+  });
+
+  /* ========== SUBTLE PARALLAX ON BACKGROUND LAYERS ========== */
+  var scanLayer = document.querySelector('.scan-layer');
+  var gridLayer = document.querySelector('.grid-layer');
+  var ticking = false;
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        var scrollY = window.pageYOffset;
+        scanLayer.style.transform = 'translateY(' + (scrollY * 0.08) + 'px)';
+        gridLayer.style.transform = 'translateY(' + (scrollY * 0.04) + 'px)';
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  var container = document.getElementById('hero-mesh');
+  if (!container) return;
+
+  /* ========== CONFIG ========== */
+  var NODE_COUNT = 80;
+  var CONNECT_DIST = 1.5;
+  var DRIFT_AMP = 0.25;
+  var MOUSE_RADIUS = 3.5;
+  var MOUSE_PULL = 0.7;
+
+  /* ========== SCENE ========== */
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(
+    50,
+    container.clientWidth / container.clientHeight,
+    0.1, 100
+  );
+  camera.position.set(1.5, 0.5, 8);
+  camera.lookAt(1.5, 0.5, 0);
+
+  var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+  container.appendChild(renderer.domElement);
+
+  /* ========== GENERATE NODES (biased upper-right) ========== */
+  var nodes = [];
+  var nodesBase = [];
+  var driftPhase = [];
+
+  for (var i = 0; i < NODE_COUNT; i++) {
+    var rx = Math.pow(Math.random(), 0.6);
+    var ry = Math.pow(Math.random(), 0.6);
+    var x = (rx * 2 - 0.35) * 5.5;
+    var y = (ry * 2 - 0.35) * 4.5;
+    var z = (Math.random() - 0.5) * 1.5;
+
+    nodes.push(new THREE.Vector3(x, y, z));
+    nodesBase.push(new THREE.Vector3(x, y, z));
+    driftPhase.push({
+      px: Math.random() * Math.PI * 2,
+      py: Math.random() * Math.PI * 2,
+      pz: Math.random() * Math.PI * 2,
+      sx: 0.07 + Math.random() * 0.14,
+      sy: 0.07 + Math.random() * 0.14,
+      sz: 0.05 + Math.random() * 0.1
+    });
+  }
+
+  /* ========== FIND CONNECTIONS ========== */
+  var connections = [];
+  for (var i = 0; i < NODE_COUNT; i++) {
+    for (var j = i + 1; j < NODE_COUNT; j++) {
+      if (nodesBase[i].distanceTo(nodesBase[j]) < CONNECT_DIST) {
+        connections.push([i, j]);
+      }
+    }
+  }
+  var lineCount = connections.length;
+
+  /* ========== EDGE FADE ========== */
+  function smoothstep(a, b, x) {
+    var t = Math.max(0, Math.min(1, (x - a) / (b - a)));
+    return t * t * (3 - 2 * t);
+  }
+
+  function computeFade(v) {
+    return smoothstep(-2.5, 1.5, v.x) * smoothstep(-2, 1, v.y);
+  }
+
+  /* ========== LINE SEGMENTS ========== */
+  var linePos = new Float32Array(lineCount * 6);
+  var lineAlpha = new Float32Array(lineCount * 2);
+
+  var lineGeo = new THREE.BufferGeometry();
+  lineGeo.setAttribute('position', new THREE.BufferAttribute(linePos, 3));
+  lineGeo.setAttribute('aAlpha', new THREE.BufferAttribute(lineAlpha, 1));
+
+  var lineMat = new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    uniforms: {
+      uMouse: { value: new THREE.Vector3(999, 999, 0) },
+      uMouseActive: { value: 0.0 },
+      uBaseColor: { value: new THREE.Color(0x7B2FBE) }
+    },
+    vertexShader: [
+      'attribute float aAlpha;',
+      'uniform vec3 uMouse;',
+      'uniform float uMouseActive;',
+      'varying float vAlpha;',
+      'varying float vDist;',
+      'void main() {',
+      '  vAlpha = aAlpha;',
+      '  vDist = distance(position, uMouse);',
+      '  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);',
+      '}'
+    ].join('\n'),
+    fragmentShader: [
+      'uniform vec3 uBaseColor;',
+      'uniform float uMouseActive;',
+      'varying float vAlpha;',
+      'varying float vDist;',
+      'void main() {',
+      '  vec3 col = uBaseColor;',
+      '  float glow = exp(-vDist * vDist * 0.08) * uMouseActive;',
+      '  col = mix(col, vec3(1.0), glow * 0.8);',
+      '  float a = vAlpha * (1.0 + glow * 0.6);',
+      '  gl_FragColor = vec4(col, a);',
+      '}'
+    ].join('\n')
+  });
+
+  scene.add(new THREE.LineSegments(lineGeo, lineMat));
+
+  /* ========== POINT NODES ========== */
+  var ptPos = new Float32Array(NODE_COUNT * 3);
+  var ptAlpha = new Float32Array(NODE_COUNT);
+
+  var ptGeo = new THREE.BufferGeometry();
+  ptGeo.setAttribute('position', new THREE.BufferAttribute(ptPos, 3));
+  ptGeo.setAttribute('aAlpha', new THREE.BufferAttribute(ptAlpha, 1));
+
+  var ptMat = new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    uniforms: {
+      uMouse: lineMat.uniforms.uMouse,
+      uMouseActive: { value: 0.0 },
+      uBaseColor: { value: new THREE.Color(0x7B2FBE) }
+    },
+    vertexShader: [
+      'attribute float aAlpha;',
+      'uniform vec3 uMouse;',
+      'uniform float uMouseActive;',
+      'varying float vAlpha;',
+      'varying float vDist;',
+      'void main() {',
+      '  vAlpha = aAlpha;',
+      '  vDist = distance(position, uMouse);',
+      '  float glow = exp(-vDist * vDist * 0.08) * uMouseActive;',
+      '  gl_PointSize = mix(2.5, 6.0, glow);',
+      '  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);',
+      '}'
+    ].join('\n'),
+    fragmentShader: [
+      'uniform vec3 uBaseColor;',
+      'uniform float uMouseActive;',
+      'varying float vAlpha;',
+      'varying float vDist;',
+      'void main() {',
+      '  float d = length(gl_PointCoord - 0.5) * 2.0;',
+      '  if (d > 1.0) discard;',
+      '  vec3 col = uBaseColor;',
+      '  float glow = exp(-vDist * vDist * 0.08) * uMouseActive;',
+      '  col = mix(col, vec3(1.0), glow * 0.8);',
+      '  float a = vAlpha * (1.0 + glow * 0.6) * (1.0 - d * 0.4);',
+      '  gl_FragColor = vec4(col, a);',
+      '}'
+    ].join('\n')
+  });
+
+  scene.add(new THREE.Points(ptGeo, ptMat));
+
+  /* ========== MOUSE TRACKING ========== */
+  var mouseWorldTarget = new THREE.Vector3(999, 999, 0);
+  var mouseWorld = new THREE.Vector3(999, 999, 0);
+  var mouseActive = false;
+  var tmpVec = new THREE.Vector3();
+
+  document.addEventListener('mousemove', function(e) {
+    var rect = container.getBoundingClientRect();
+    var ndcX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    var ndcY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    tmpVec.set(ndcX, ndcY, 0.5).unproject(camera);
+    var dir = tmpVec.sub(camera.position).normalize();
+    var t = -camera.position.z / dir.z;
+    mouseWorldTarget.copy(camera.position).addScaledVector(dir, t);
+    mouseActive = true;
+  }, { passive: true });
+
+  document.addEventListener('mouseleave', function() {
+    mouseActive = false;
+  });
+
+  /* ========== RESIZE ========== */
+  function onResize() {
+    var w = container.clientWidth;
+    var h = container.clientHeight;
+    if (w === 0 || h === 0) return;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  }
+  window.addEventListener('resize', onResize, { passive: true });
+
+  /* ========== ANIMATE ========== */
+  var clock = new THREE.Clock();
+  var smoothMA = 0;
+  var pull = new THREE.Vector3();
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    var t = clock.getElapsedTime();
+    smoothMA += ((mouseActive ? 1 : 0) - smoothMA) * 0.06;
+    lineMat.uniforms.uMouseActive.value = smoothMA;
+    ptMat.uniforms.uMouseActive.value = smoothMA;
+    mouseWorld.lerp(mouseWorldTarget, 0.1);
+    lineMat.uniforms.uMouse.value.copy(mouseWorld);
+
+    /* Update node positions: drift + mouse pull */
+    for (var i = 0; i < NODE_COUNT; i++) {
+      var b = nodesBase[i];
+      var p = driftPhase[i];
+      nodes[i].set(
+        b.x + Math.sin(t * p.sx + p.px) * DRIFT_AMP,
+        b.y + Math.cos(t * p.sy + p.py) * DRIFT_AMP,
+        b.z + Math.sin(t * p.sz + p.pz) * DRIFT_AMP * 0.5
+      );
+      if (smoothMA > 0.01) {
+        pull.subVectors(mouseWorld, nodes[i]);
+        var dist = pull.length();
+        if (dist < MOUSE_RADIUS && dist > 0.01) {
+          var strength = (1 - dist / MOUSE_RADIUS) * MOUSE_PULL * smoothMA;
+          nodes[i].addScaledVector(pull.normalize(), strength);
+        }
+      }
+      ptPos[i * 3]     = nodes[i].x;
+      ptPos[i * 3 + 1] = nodes[i].y;
+      ptPos[i * 3 + 2] = nodes[i].z;
+      ptAlpha[i] = computeFade(nodes[i]) * 0.9;
+    }
+
+    /* Update line segment positions and alphas */
+    for (var c = 0; c < lineCount; c++) {
+      var a = connections[c][0], bi = connections[c][1];
+      var off = c * 6;
+      linePos[off]     = nodes[a].x;
+      linePos[off + 1] = nodes[a].y;
+      linePos[off + 2] = nodes[a].z;
+      linePos[off + 3] = nodes[bi].x;
+      linePos[off + 4] = nodes[bi].y;
+      linePos[off + 5] = nodes[bi].z;
+      lineAlpha[c * 2]     = computeFade(nodes[a]) * 0.7;
+      lineAlpha[c * 2 + 1] = computeFade(nodes[bi]) * 0.7;
+    }
+
+    lineGeo.attributes.position.needsUpdate = true;
+    lineGeo.attributes.aAlpha.needsUpdate = true;
+    ptGeo.attributes.position.needsUpdate = true;
+    ptGeo.attributes.aAlpha.needsUpdate = true;
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+</script>
 </body>
-
 </html>
-
-
