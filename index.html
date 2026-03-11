@@ -35,6 +35,9 @@
     <img src="assets/logo.jpeg" alt="Rikoukei Labs logo" class="nav-logo">
     <a href="#" class="nav-brand">Rikoukei Labs</a>
   </div>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <ul class="nav-links">
     <li><a href="#products">Products</a></li>
     <li><a href="#about">About</a></li>
@@ -254,6 +257,24 @@
     glitchObserver.observe(h);
   });
 
+  /* ========== MOBILE NAV TOGGLE ========== */
+  var navToggle = document.querySelector('.nav-toggle');
+  var navLinks = document.querySelector('.nav-links');
+
+  navToggle.addEventListener('click', function() {
+    var isOpen = navLinks.classList.toggle('nav-open');
+    navToggle.classList.toggle('nav-toggle-active', isOpen);
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  navLinks.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      navLinks.classList.remove('nav-open');
+      navToggle.classList.remove('nav-toggle-active');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
   /* ========== SUBTLE PARALLAX ON BACKGROUND LAYERS ========== */
   var scanLayer = document.querySelector('.scan-layer');
   var gridLayer = document.querySelector('.grid-layer');
@@ -282,8 +303,9 @@
   if (!container) return;
 
   /* ========== CONFIG ========== */
-  var NODE_COUNT = 80;
-  var CONNECT_DIST = 1.5;
+  var isMobile = window.innerWidth < 768;
+  var NODE_COUNT = isMobile ? 100 : 180;
+  var CONNECT_DIST = isMobile ? 1.6 : 1.4;
   var DRIFT_AMP = 0.25;
   var MOUSE_RADIUS = 3.5;
   var MOUSE_PULL = 0.7;
@@ -300,7 +322,7 @@
 
   var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
   renderer.setClearColor(0x000000, 0);
   container.appendChild(renderer.domElement);
 
@@ -449,18 +471,37 @@
   var mouseActive = false;
   var tmpVec = new THREE.Vector3();
 
-  document.addEventListener('mousemove', function(e) {
+  function updateMouseWorld(clientX, clientY) {
     var rect = container.getBoundingClientRect();
-    var ndcX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    var ndcY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    var ndcX = ((clientX - rect.left) / rect.width) * 2 - 1;
+    var ndcY = -((clientY - rect.top) / rect.height) * 2 + 1;
     tmpVec.set(ndcX, ndcY, 0.5).unproject(camera);
     var dir = tmpVec.sub(camera.position).normalize();
     var t = -camera.position.z / dir.z;
     mouseWorldTarget.copy(camera.position).addScaledVector(dir, t);
     mouseActive = true;
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    updateMouseWorld(e.clientX, e.clientY);
   }, { passive: true });
 
   document.addEventListener('mouseleave', function() {
+    mouseActive = false;
+  });
+
+  /* Touch support for mobile */
+  document.addEventListener('touchmove', function(e) {
+    var touch = e.touches[0];
+    updateMouseWorld(touch.clientX, touch.clientY);
+  }, { passive: true });
+
+  document.addEventListener('touchstart', function(e) {
+    var touch = e.touches[0];
+    updateMouseWorld(touch.clientX, touch.clientY);
+  }, { passive: true });
+
+  document.addEventListener('touchend', function() {
     mouseActive = false;
   });
 

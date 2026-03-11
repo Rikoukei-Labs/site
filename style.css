@@ -172,6 +172,37 @@ nav.nav-scrolled {
   text-transform: uppercase;
 }
 
+/* Hamburger toggle — hidden on desktop */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 6px;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 5001;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--white);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.nav-toggle-active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle-active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 .nav-links {
   display: flex;
   gap: 32px;
@@ -602,24 +633,65 @@ footer {
     font-size: 14px;
   }
 
+  .nav-toggle {
+    display: flex;
+  }
+
   .nav-links {
-    gap: 16px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    background: var(--bg);
+    z-index: 5000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .nav-links.nav-open {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .nav-links a {
-    font-size: 12px;
+    font-size: 20px;
+    letter-spacing: 0.2em;
   }
 
   .hero {
     padding: 100px 20px 60px;
+    min-height: 100svh;
   }
 
   .hero-title {
     max-width: 100%;
+    font-size: clamp(48px, 14vw, 80px);
+    z-index: 2;
+    position: relative;
+  }
+
+  .hero-tagline {
+    z-index: 2;
+    position: relative;
+  }
+
+  .hero-sub {
+    z-index: 2;
+    position: relative;
   }
 
   .hero-mesh {
-    display: none;
+    top: -20px;
+    right: -40px;
+    bottom: -20px;
+    left: -20%;
+    opacity: 0.4;
   }
 
   .hero-border-accent {
@@ -627,7 +699,7 @@ footer {
   }
 
   .products {
-    padding: 40px 20px;
+    padding: 40px 16px;
   }
 
   .product-card {
@@ -644,19 +716,58 @@ footer {
   }
 
   .about {
-    padding: 40px 20px;
+    padding: 40px 16px;
+  }
+
+  .about-header-col .section-header {
+    margin-bottom: 16px;
   }
 
   .contact {
-    padding: 28px 20px 60px;
+    padding: 28px 16px 60px;
   }
 
   .contact-block {
-    padding: 20px;
+    padding: 16px;
+    font-size: 13px;
+    word-break: break-all;
+  }
+
+  .contact-line {
+    flex-wrap: wrap;
+  }
+
+  .contact-flag {
+    display: none;
   }
 
   footer {
-    padding: 20px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+
+  .section-header {
+    font-size: clamp(36px, 10vw, 60px);
+  }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+  .nav-logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nav-brand {
+    font-size: 12px;
+  }
+
+  .hero-title {
+    font-size: clamp(40px, 13vw, 64px);
+  }
+
+  .contact-block {
+    font-size: 12px;
   }
 }
 
