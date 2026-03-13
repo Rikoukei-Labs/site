@@ -479,6 +479,94 @@ nav.nav-scrolled {
     max-width: 65%;
     margin-left: auto;
   }
+
+  .product-card:nth-child(4) {
+    margin-left: 0;
+    max-width: none;
+  }
+  .product-card:nth-child(5) {
+    margin-left: 0;
+    max-width: none;
+  }
+  .product-card:nth-child(6) {
+    grid-column: 1 / -1;
+    max-width: 65%;
+    margin-left: 0;
+  }
+}
+
+/* ========== PRODUCT CARD LINKS ========== */
+a.product-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* ========== SERVICES ========== */
+.services {
+  position: relative;
+  z-index: 2;
+  padding: clamp(40px, 5vw, 80px) var(--section-pad-x);
+}
+
+.services-intro {
+  font-family: var(--font-mono);
+  font-size: clamp(13px, 1.3vw, 16px);
+  color: var(--grey);
+  max-width: var(--content-max);
+  margin: 0 auto 40px;
+  letter-spacing: 0.02em;
+}
+
+.services-list {
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+
+.service-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: clamp(24px, 3vw, 36px) 0;
+  border-bottom: 1px solid var(--grey-dim);
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: transform, opacity;
+}
+
+.service-row.card-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-row:first-child {
+  border-top: 1px solid var(--grey-dim);
+}
+
+.service-label {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(20px, 2.5vw, 28px);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.service-desc {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--body-text);
+}
+
+@media (min-width: 768px) {
+  .service-row {
+    grid-template-columns: 1fr 1.8fr;
+    gap: 40px;
+    align-items: baseline;
+  }
 }
 
 /* ========== ABOUT ========== */
@@ -713,6 +801,10 @@ footer {
 
   .product-card.slide-right {
     transform: translateX(30px) rotate(0.8deg);
+  }
+
+  .services {
+    padding: 40px 16px;
   }
 
   .about {

@@ -40,6 +40,7 @@
   </button>
   <ul class="nav-links">
     <li><a href="#products">Products</a></li>
+    <li><a href="#services">Services</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -110,6 +111,61 @@
       <p class="card-desc">Reads long documents and pulls out what actually matters. No summaries padded with filler — just the signal, not the noise.</p>
       <span class="card-status">// in development</span>
     </article>
+
+    <a href="https://ahiyantra.itch.io/3dplatformer" class="product-card slide-right" style="--card-tilt: 0.5deg;" target="_blank" rel="noopener noreferrer">
+      <span class="card-label">Playable Demo</span>
+      <h3 class="card-title">3D Platformer Demo</h3>
+      <p class="card-desc">A 3D world exploration game demo — open environments, traversal mechanics, built from the ground up.</p>
+      <span class="card-status">// live on itch.io</span>
+    </a>
+
+    <a href="https://ahiyantra.itch.io/3dshooter" class="product-card slide-left" style="--card-tilt: -0.4deg;" target="_blank" rel="noopener noreferrer">
+      <span class="card-label">Playable Demo</span>
+      <h3 class="card-title">3D Shooter Demo</h3>
+      <p class="card-desc">A 3D shooter game demo — fast-paced, first or third person, built as a standalone technical showcase.</p>
+      <span class="card-status">// live on itch.io</span>
+    </a>
+
+    <article class="product-card slide-right" style="--card-tilt: 0.6deg;">
+      <span class="card-label">For osu! Players</span>
+      <h3 class="card-title">Ritsu</h3>
+      <p class="card-desc">A companion app for osu! players — ad-free, resilient, and packed with features the official client doesn't bother with. Built for players who take the game seriously.</p>
+      <span class="card-status">// in development</span>
+    </article>
+
+  </div>
+</section>
+
+<!-- ========== SERVICES ========== -->
+<section class="services" id="services">
+  <h2 class="section-header" data-glitch>Services</h2>
+  <p class="services-intro">What we deliver — and what you can expect when we do.</p>
+  <div class="services-list">
+
+    <div class="service-row">
+      <div class="service-label">Custom Application Development</div>
+      <div class="service-desc">We scope, build, and ship applications to your exact requirements — with resilience and long-term maintainability as non-negotiable constraints from day one, not retrofitted later. No bloat, no over-engineering, no surprises at handoff.</div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-label">Debugging & Application Maintenance</div>
+      <div class="service-desc">If something you own is broken, slow, or quietly accumulating technical debt, we come in and fix it properly. Not a patch — a real fix, with documentation of what went wrong and why it won't again.</div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-label">Pipeline Orchestration & Maintenance</div>
+      <div class="service-desc">We design, implement, and maintain data and deployment pipelines that don't require babysitting. Your team should be shipping product, not firefighting infrastructure.</div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-label">API Integration & Systems Interop</div>
+      <div class="service-desc">We connect your tools and services so they actually talk to each other — clean integrations with proper error handling, retry logic, and documentation your team can maintain without us.</div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-label">Performance Auditing & Optimization</div>
+      <div class="service-desc">We profile your application, identify what's actually slow, and fix it — with before-and-after benchmarks so you can see exactly what changed. No guesswork, no vague recommendations.</div>
+    </div>
 
   </div>
 </section>
@@ -184,7 +240,7 @@
   var titleWords = titleEl.querySelectorAll('.word');
 
   var taglineText = "We make things that hold up.";
-  var subText = "Software and games built for the long run — not just the launch.";
+  var subText = "Built for the long run — not just the launch.";
 
   function wrapWords(text) {
     return text.split(' ').map(function(w) {
@@ -226,7 +282,7 @@
   navObserver.observe(hero);
 
   /* ========== PRODUCT CARD SCROLL ANIMATION ========== */
-  var cards = document.querySelectorAll('.product-card');
+  var cards = document.querySelectorAll('.product-card, .service-row');
 
   var cardObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
