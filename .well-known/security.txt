@@ -1,0 +1,5 @@
+# Security contact for Rikoukei Labs — https://www.rikoukeilabs.com
+Contact: mailto:swarn.sw@rikoukeilabs.com
+Expires: 2027-07-03T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://www.rikoukeilabs.com/.well-known/security.txt

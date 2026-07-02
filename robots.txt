@@ -1,0 +1,5 @@
+# Rikoukei Labs — https://www.rikoukeilabs.com
+User-agent: *
+Allow: /
+
+Sitemap: https://www.rikoukeilabs.com/sitemap.xml
