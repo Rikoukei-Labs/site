@@ -133,12 +133,12 @@
   <h2 class="section-header" data-glitch>Products</h2>
   <div class="products-grid">
 
-    <article class="product-card slide-left" style="--card-tilt: -0.6deg;">
+    <a href="concourse/" id="concourse-card" class="product-card slide-left" style="--card-tilt: -0.6deg;">
       <span class="card-label">Live. Scaled. Stable.</span>
       <h3 class="card-title">Concourse</h3>
-      <p class="card-desc">Our flagship project, An E2E meal and attenance tracker for universty campus, currently being used in a top 100 university.</p>
+      <p class="card-desc">Our flagship project: an end-to-end attendance, meal allowance, and POS platform for university campuses, currently in production at a top-100 university.</p>
       <span class="card-status">// deployed</span>
-    </article>
+    </a>
 
     <article class="product-card slide-right" style="--card-tilt: 0.7deg;">
       <span class="card-label">Open collaboration. Closed data.</span>
@@ -398,6 +398,35 @@
       ticking = true;
     }
   }, { passive: true });
+
+  /* ========== CONCOURSE WARP TRANSITION ========== */
+  var concourseCard = document.getElementById('concourse-card');
+
+  if (concourseCard) {
+    concourseCard.addEventListener('click', function(e) {
+      /* Let modified clicks (new tab etc.) and reduced motion fall through
+         to plain navigation. */
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      e.preventDefault();
+      var dest = concourseCard.getAttribute('href') + '?warp=1';
+
+      var ov = document.createElement('div');
+      ov.className = 'warp-out';
+      ov.style.setProperty('--cx', e.clientX + 'px');
+      ov.style.setProperty('--cy', e.clientY + 'px');
+      ov.innerHTML =
+        '<div class="wfill"></div>' +
+        '<span class="wring"></span>' +
+        '<span class="wring"></span>' +
+        '<span class="wring"></span>' +
+        '<span class="wlabel">// LAUNCHING : CONCOURSE</span>';
+      document.body.appendChild(ov);
+
+      setTimeout(function() { window.location.href = dest; }, 760);
+    });
+  }
 
 })();
 </script>

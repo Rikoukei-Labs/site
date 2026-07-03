@@ -848,6 +848,72 @@ footer {
   border-color: var(--amber);
 }
 
+/* ========== CONCOURSE WARP TRANSITION ========== */
+.warp-out {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.warp-out .wfill {
+  position: absolute;
+  inset: 0;
+  background: #0a0a0a;
+  clip-path: circle(0px at var(--cx) var(--cy));
+  animation: warp-fill 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.1s;
+}
+
+.warp-out .wring {
+  position: absolute;
+  left: var(--cx);
+  top: var(--cy);
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid #ffc67e;
+  border-radius: 50%;
+  opacity: 0;
+  animation: warp-out-ring 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.warp-out .wring:nth-child(3) {
+  animation-delay: 0.09s;
+  border-width: 1px;
+}
+
+.warp-out .wring:nth-child(4) {
+  animation-delay: 0.18s;
+  border-width: 1px;
+  border-color: #be5cd8;
+}
+
+.warp-out .wlabel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: #ffc67e;
+  opacity: 0;
+  animation: warp-out-label 0.35s ease forwards 0.4s;
+}
+
+@keyframes warp-fill {
+  to { clip-path: circle(150% at var(--cx) var(--cy)); }
+}
+
+@keyframes warp-out-ring {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(70); opacity: 0; }
+}
+
+@keyframes warp-out-label {
+  to { opacity: 1; }
+}
+
 /* ========== UTILITY ========== */
 .sr-only {
   position: absolute;
