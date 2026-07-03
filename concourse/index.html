@@ -372,12 +372,7 @@
     -webkit-backdrop-filter: blur(4px);
     padding: 56px 0;
   }
-  .proof .inner {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: clamp(28px, 5vw, 72px);
-    align-items: center;
-  }
+  .proof .claim { max-width: 46em; }
   .proof .claim {
     font-size: clamp(16px, 1.9vw, 20px);
     font-weight: 500;
@@ -404,29 +399,6 @@
     animation: pulse 2s ease-in-out infinite;
   }
   @keyframes pulse { 50% { opacity: 0.35; } }
-  .proof-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-  }
-  .proof-stats .ps b {
-    display: block;
-    font-size: clamp(22px, 2.6vw, 30px);
-    font-weight: 700;
-    color: var(--gold);
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-  }
-  .proof-stats .ps span {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-  }
-  @media (max-width: 860px) {
-    .proof .inner { grid-template-columns: 1fr; }
-  }
 
   /* ---------- Feature surfaces ---------- */
   .features-head { padding: clamp(90px, 12vh, 150px) 0 30px; }
@@ -661,63 +633,36 @@
     margin-bottom: 10px;
   }
 
-  /* ---------- Impact / metrics ---------- */
+  /* ---------- In the field (kept deliberately quiet) ---------- */
   .impact { padding: clamp(90px, 12vh, 150px) 0; }
-  .impact .window-note {
+  .field-notes {
+    margin-top: 44px;
+    max-width: 640px;
+    border: 2px solid var(--line-soft);
+    border-left: 4px solid var(--gold-dim);
+    background: var(--bg-raised);
+    padding: 20px 24px;
+  }
+  .field-notes .fn-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-faint);
+    margin-bottom: 12px;
+  }
+  .field-notes .fn-line {
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    line-height: 1.9;
+    color: var(--text-dim);
+  }
+  .field-notes .fn-note {
+    margin-top: 12px;
     font-family: var(--font-mono);
     font-size: 12px;
-    letter-spacing: 0.1em;
+    line-height: 1.7;
     color: var(--text-faint);
-    margin-top: 14px;
   }
-  .stat-grid {
-    margin-top: 54px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  .stat {
-    border: 2px solid var(--line-soft);
-    border-radius: 0;
-    padding: 32px 28px;
-    background: linear-gradient(160deg, rgba(17, 17, 17, 0.85), rgba(13, 13, 13, 0.5));
-    position: relative;
-    overflow: hidden;
-  }
-  .stat::after {
-    content: "";
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%; height: 2px;
-    background: linear-gradient(90deg, var(--gold), transparent 70%);
-    opacity: 0.5;
-  }
-  .stat.teal::after { background: linear-gradient(90deg, var(--accent2), transparent 70%); }
-  .stat .val {
-    font-family: var(--font-display);
-    font-size: clamp(42px, 5vw, 60px);
-    font-weight: 900;
-    letter-spacing: -0.02em;
-    color: var(--gold);
-    line-height: 1.1;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-  }
-  .stat.teal .val { color: var(--accent2); }
-  .stat .val small { font-size: 0.45em; font-weight: 500; color: var(--text-dim); letter-spacing: 0.05em; margin-left: 6px; }
-  .stat .cap { margin-top: 10px; color: var(--text-dim); font-size: 14.5px; }
-  .agg-note {
-    margin-top: 26px;
-    font-size: 13px;
-    color: var(--text-faint);
-    font-family: var(--font-mono);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .agg-note::before { content: "◆"; color: var(--gold-dim); font-size: 9px; }
-  @media (max-width: 860px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) { .stat-grid { grid-template-columns: 1fr; } }
 
   /* ---------- Footer / closing ---------- */
   .closing {
@@ -725,13 +670,6 @@
     text-align: center;
     border-top: 1px solid var(--line-soft);
     background: linear-gradient(180deg, transparent, rgba(14, 10, 16, 0.55));
-  }
-  .closing .final-logo {
-    width: clamp(150px, 22vw, 210px);
-    height: auto;
-    margin: 0 auto 36px;
-    display: block;
-    filter: drop-shadow(0 0 30px rgba(255, 198, 126, 0.25));
   }
   .closing h2 { margin: 0 auto; max-width: 15em; }
   .closing .lede { margin-left: auto; margin-right: auto; text-align: center; }
@@ -891,6 +829,20 @@
     0% { opacity: 0; transform: translateY(8px); }
     100% { opacity: 1; transform: translateY(0); }
   }
+
+  /* ---------- Mobile performance ----------
+     Drop the GPU-heavy layers on small screens: blend-mode grain,
+     scanlines, backdrop blur, and the big SVG drop-shadow. The starfield
+     is drawn once (no parallax redraws) and the orrery is a simple fade. */
+  @media (max-width: 768px) {
+    .grain, .scan-layer { display: none; }
+    .proof { backdrop-filter: none; -webkit-backdrop-filter: none; }
+    #orrery { filter: none; }
+    .reveal {
+      transform: translateY(14px);
+      transition-duration: 0.45s;
+    }
+  }
 </style>
 </head>
 <body>
@@ -1010,11 +962,6 @@
       <div class="claim reveal">
         <div class="live">Live in production</div>
         Deployed in real-time production use at a <strong>top-100 global research university</strong> campus, running attendance, meal allowances, and point-of-sale every day.
-      </div>
-      <div class="proof-stats">
-        <div class="ps reveal" style="--d:.1s"><b>60,775 <small style="font-size:.55em;color:var(--text-dim)">SAR</small></b><span>processed in 5 days</span></div>
-        <div class="ps reveal" style="--d:.2s"><b>2,439</b><span>transactions</span></div>
-        <div class="ps reveal" style="--d:.3s"><b>394</b><span>active students</span></div>
       </div>
     </div>
   </section>
@@ -1240,68 +1187,20 @@
   <!-- ============ IMPACT ============ -->
   <section class="impact" id="impact">
     <div class="inner">
-      <div class="eyebrow reveal">Impact</div>
-      <h2 class="reveal" style="--d:.1s">Five days of real telemetry.</h2>
-      <p class="lede reveal" style="--d:.2s">Aggregate production numbers from a single five-day window at the pilot campus. Not a projection, not a demo environment.</p>
-      <p class="window-note reveal" style="--d:.25s">OBSERVATION WINDOW · FEB 3 – FEB 7, 2026</p>
-      <div class="stat-grid">
-        <div class="stat reveal"><div class="val"><span class="count" data-target="60775">0</span><small>SAR</small></div><div class="cap">Total meal spending processed</div></div>
-        <div class="stat reveal" style="--d:.08s"><div class="val"><span class="count" data-target="2439">0</span></div><div class="cap">Transactions completed</div></div>
-        <div class="stat reveal" style="--d:.16s"><div class="val"><span class="count" data-target="394">0</span></div><div class="cap">Unique active students served</div></div>
-        <div class="stat teal reveal" style="--d:.24s"><div class="val"><span class="count" data-target="24.9" data-decimals="1">0</span><small>SAR</small></div><div class="cap">Average transaction value</div></div>
-        <div class="stat teal reveal" style="--d:.32s"><div class="val"><span class="count" data-target="647">0</span></div><div class="cap">Peak-day transactions: a single day at full tilt</div></div>
-        <div class="stat teal reveal" style="--d:.4s"><div class="val">9:00<small>AM</small></div><div class="cap">Peak usage hour: the breakfast rush, every day</div></div>
+      <div class="eyebrow reveal">In the field</div>
+      <h2 class="reveal" style="--d:.1s">In quiet, daily service.</h2>
+      <p class="lede reveal" style="--d:.2s">Concourse runs the everyday rhythm of a working campus: morning check-ins, the breakfast rush, the end-of-day report. It is not built to impress with dashboards; it is built to stay out of the way.</p>
+      <div class="field-notes reveal" style="--d:.3s">
+        <div class="fn-title">FIELD NOTES · EARLY FIVE-DAY SAMPLE · FEB 2026</div>
+        <p class="fn-line">60,000+ SAR settled&ensp;·&ensp;2,400+ transactions&ensp;·&ensp;~400 active students&ensp;·&ensp;busiest hour 09:00</p>
+        <p class="fn-note">An early snapshot; the platform has been in continuous daily use since. Aggregate figures only: Concourse never exposes individual spending profiles.</p>
       </div>
-      <p class="agg-note reveal" style="--d:.2s">Aggregate figures only. Concourse reports never expose individual spending profiles.</p>
     </div>
   </section>
 
   <!-- ============ CLOSING / FOOTER ============ -->
   <section class="closing" id="contact">
     <div class="inner">
-      <svg class="final-logo reveal" viewBox="240 20 1120 1320" xmlns="http://www.w3.org/2000/svg" fill="transparent" aria-label="Concourse logo">
-        <defs>
-          <clipPath id="clip-f0"><circle cx="800" cy="800" r="253.05"/></clipPath>
-          <mask id="mask-f0"><rect width="1600" height="1600" fill="white"/><circle cx="546.95" cy="800" r="96.25" fill="black"/></mask>
-          <mask id="mask-f1"><rect width="1600" height="1600" fill="white"/><circle cx="546.95" cy="800" r="77" fill="black"/></mask>
-        </defs>
-        <g transform="translate(800,800) scale(2.07) translate(-800,-800)">
-          <g>
-            <path d="M 978.9333709792559 978.9333709792558 A 253.04999999999998 253.04999999999998 0 0 1 621.0666290207441 978.9333709792559" fill="transparent" stroke-width="4" stroke="#ffc67e"/>
-            <circle cx="800" cy="956.8" r="77" stroke-width="4" stroke="#ffc67e"/>
-            <circle cx="868.6075023625043" cy="921.8427315200548" r="9.5" stroke-width="0" fill="#ffc67e"/>
-            <circle cx="854.4472221513641" cy="902.3527778486358" r="9.5" stroke-width="0" fill="#ffc67e"/>
-            <circle cx="800" cy="879.8" r="38" stroke-width="4" stroke="#ffc67e"/>
-          </g>
-          <g>
-            <path d="M 978.9333709792558 621.0666290207441 A 253.04999999999998 253.04999999999998 0 0 1 978.9333709792559 978.9333709792559" fill="transparent" stroke-width="4" stroke="#ffc67e"/>
-            <circle cx="956.8" cy="800" r="96.25" stroke-width="4" stroke="#ffc67e"/>
-            <line x1="878.9321142914113" y1="743.4256694668495" x2="836.1047771516875" y2="712.3097876736166" stroke-width="4" stroke="#ffc67e"/>
-            <circle cx="956.8" cy="800" r="77" stroke-width="5" stroke="#ffc67e"/>
-            <circle cx="921.8427315200548" cy="731.3924976374957" r="9.5" stroke-width="0" fill="#ffc67e"/>
-            <circle cx="902.3527778486358" cy="745.5527778486359" r="9.5" stroke-width="0" fill="#ffc67e"/>
-            <circle cx="879.8" cy="800" r="38" stroke-width="5" stroke="#ffc67e"/>
-          </g>
-          <g>
-            <path d="M 621.0666290207441 621.0666290207441 A 253.04999999999998 253.04999999999998 0 0 1 978.9333709792559 621.0666290207441" fill="transparent" stroke-width="4" stroke="#ffc67e"/>
-            <circle cx="800" cy="546.95" r="38" stroke-width="4" stroke="#ffc67e"/>
-            <line x1="800" y1="508.95000000000005" x2="800" y2="432.95000000000005" stroke-width="4" stroke="#ffc67e"/>
-          </g>
-          <g>
-            <path d="M 621.0666290207441 978.9333709792559 A 253.04999999999998 253.04999999999998 0 0 1 621.0666290207441 621.0666290207441" fill="transparent" mask="url(#mask-f0)" stroke-width="4" stroke="#ffc67e"/>
-            <path d="M 546.95 703.75 A 96.25 96.25 0 0 1 546.95 896.25" clip-path="url(#clip-f0)" stroke-width="4" stroke="#ffc67e"/>
-            <circle cx="576.6928857085887" cy="891.5391896934085" r="9.5" stroke-width="0" fill="#ffc67e"/>
-            <circle cx="603.5243305331505" cy="877.8678857085887" r="9.5" stroke-width="0" fill="#ffc67e"/>
-            <circle cx="624.8178857085887" cy="856.5743305331506" r="9.5" stroke-width="0" fill="#ffc67e"/>
-            <path d="M 621.0666290207441 978.9333709792559 A 253.04999999999998 253.04999999999998 0 0 1 621.0666290207441 621.0666290207441" fill="transparent" mask="url(#mask-f1)" stroke-width="4" stroke="#ffc67e"/>
-            <path d="M 546.95 723 A 77 77 0 0 1 546.95 877" clip-path="url(#clip-f0)" stroke-width="5" stroke="#ffc67e"/>
-            <line x1="570.7443085668709" y1="873.2313517547268" x2="583.83117827865" y2="913.5085952198266" stroke-width="5" stroke="#ffc67e"/>
-            <line x1="592.2094644265204" y1="862.294308566871" x2="617.1021698611066" y2="896.55617827865" stroke-width="5" stroke="#ffc67e"/>
-            <line x1="609.244308566871" y1="845.2594644265205" x2="643.50617827865" y2="870.1521698611067" stroke-width="5" stroke="#ffc67e"/>
-            <circle cx="546.95" cy="800" r="38" stroke-width="5" stroke="#ffc67e"/>
-          </g>
-        </g>
-      </svg>
       <h2 class="reveal" style="--d:.18s">Every piece in orbit.<br>Bring Concourse to your campus.</h2>
       <p class="lede reveal" style="--d:.26s">From the first morning scan to the end-of-day report, one platform keeps the whole operation in motion.</p>
       <div class="hero-ctas reveal" style="--d:.34s">
@@ -1314,7 +1213,7 @@
         <span class="links">
           <a href="#platform">Platform</a>
           <a href="#security">Security</a>
-          <a href="#impact">Impact</a>
+          <a href="#impact">In the field</a>
           <a href="mailto:contact@rikoukeilabs.com">Contact</a>
         </span>
       </div>
@@ -1346,7 +1245,9 @@
     canvas.style.height = H + "px";
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     stars = [];
-    var count = Math.min(260, Math.floor(W * H / 6500));
+    // Fewer stars on mobile: less canvas work per frame.
+    var cap = mobileMQ.matches ? 110 : 260;
+    var count = Math.min(cap, Math.floor(W * H / 6500));
     for (var i = 0; i < count; i++) {
       var depth = 0.2 + Math.random() * 0.8; // farther = slower parallax
       var tint = Math.random();
@@ -1417,6 +1318,7 @@
 
   var hudFill = document.getElementById("hud-fill");
   var hudPct = document.getElementById("hud-pct");
+  var mobileAssembled = false;
 
   function updateAssembly(p) {
     // p = overall page scroll progress, 0..1
@@ -1424,9 +1326,11 @@
 
     if (mobileMQ.matches) {
       // Mobile: simple whole-logo fade-in instead of a per-piece draw.
-      completeAllPieces();
+      // Pieces are completed once, then only the container opacity changes.
+      if (!mobileAssembled) { completeAllPieces(); mobileAssembled = true; }
       orrery.style.opacity = String(0.05 + ap * 0.2);
     } else {
+      mobileAssembled = false;
       orrery.style.opacity = "";
       var span = 1 / N;           // each piece owns a slice of the scroll
       var overlap = 1.9;          // pieces overlap so assembly feels continuous
@@ -1453,7 +1357,8 @@
       var max = Math.max(1, doc.scrollHeight - window.innerHeight);
       var p = Math.max(0, Math.min(1, window.scrollY / max));
       updateAssembly(p);
-      drawStars(window.scrollY);
+      // Mobile: skip the per-scroll parallax redraw; stars stay static.
+      if (!mobileMQ.matches) drawStars(window.scrollY);
       ticking = false;
     });
   }
@@ -1467,10 +1372,18 @@
     if (hudFill) { hudFill.style.width = "100%"; hudPct.textContent = "100%"; }
   } else {
     initStars();
+    drawStars(0);
+    // Initialize assembly state synchronously; the first rAF can be delayed.
+    updateAssembly(Math.max(0, Math.min(1,
+      window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight))));
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", function () { initStars(); onScroll(); });
-    mobileMQ.addEventListener && mobileMQ.addEventListener("change", onScroll);
+    window.addEventListener("resize", function () { initStars(); drawStars(0); onScroll(); });
+    mobileMQ.addEventListener && mobileMQ.addEventListener("change", function () {
+      initStars();
+      drawStars(0);
+      onScroll();
+    });
   }
 
   /* ============ Section reveals ============ */
@@ -1489,44 +1402,6 @@
     revealEls.forEach(function (el) { io.observe(el); });
   }
 
-  /* ============ Animated counters ============ */
-  function animateCount(el) {
-    var target = parseFloat(el.dataset.target);
-    var decimals = parseInt(el.dataset.decimals || "0", 10);
-    var dur = 1500;
-    var t0 = null;
-    function fmt(v) {
-      return v.toLocaleString("en-US", {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals
-      });
-    }
-    if (reducedMotion) { el.textContent = fmt(target); return; }
-    function step(ts) {
-      if (!t0) t0 = ts;
-      var k = Math.min(1, (ts - t0) / dur);
-      var eased = 1 - Math.pow(1 - k, 3);
-      el.textContent = fmt(target * eased);
-      if (k < 1) requestAnimationFrame(step);
-      else el.textContent = fmt(target);
-    }
-    requestAnimationFrame(step);
-  }
-
-  var counters = document.querySelectorAll(".count");
-  if (!("IntersectionObserver" in window) || reducedMotion) {
-    counters.forEach(animateCount);
-  } else {
-    var cio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          animateCount(e.target);
-          cio.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.5 });
-    counters.forEach(function (el) { cio.observe(el); });
-  }
 })();
 </script>
 <script>
