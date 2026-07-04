@@ -77,41 +77,6 @@
     #orrery { width: 120vmin; height: 120vmin; opacity: 0.22; }
   }
 
-  /* Assembly HUD readout */
-  #hud {
-    position: fixed;
-    right: 22px;
-    bottom: 20px;
-    z-index: 40;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    color: var(--gold-dim);
-    background: rgba(10, 10, 10, 0.72);
-    border: 1px solid var(--line);
-    border-radius: 0;
-    padding: 8px 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-  }
-  #hud .bar {
-    width: 72px;
-    height: 3px;
-    background: rgba(255, 198, 126, 0.15);
-    border-radius: 0;
-    overflow: hidden;
-  }
-  #hud .bar i {
-    display: block;
-    height: 100%;
-    width: 0%;
-    background: var(--gold);
-    border-radius: 0;
-  }
-  @media (max-width: 768px) { #hud { display: none; } }
 
   /* ---------- Page chrome ---------- */
   .page { position: relative; z-index: 1; }
@@ -920,12 +885,6 @@
 
 <div class="scan-layer" aria-hidden="true"></div>
 
-<div id="hud" aria-hidden="true">
-  <span>ORRERY&nbsp;ASSEMBLY</span>
-  <span class="bar"><i id="hud-fill"></i></span>
-  <span id="hud-pct">0%</span>
-</div>
-
 <nav id="site-nav">
   <div class="nav-left">
     <a class="home-link" href="../">Rikoukei Labs</a>
@@ -1316,8 +1275,6 @@
     pieces.forEach(function (el) { setPieceProgress(el, 1); });
   }
 
-  var hudFill = document.getElementById("hud-fill");
-  var hudPct = document.getElementById("hud-pct");
   var mobileAssembled = false;
 
   function updateAssembly(p) {
@@ -1339,11 +1296,6 @@
         var t = (ap - start) / (span * overlap);
         setPieceProgress(pieces[i], Math.max(0, Math.min(1, t)));
       }
-    }
-
-    if (hudFill) {
-      hudFill.style.width = (ap * 100).toFixed(1) + "%";
-      hudPct.textContent = Math.round(ap * 100) + "%";
     }
   }
 
@@ -1369,7 +1321,6 @@
     orrery.style.opacity = "0.25";
     initStars();
     drawStars(0);
-    if (hudFill) { hudFill.style.width = "100%"; hudPct.textContent = "100%"; }
   } else {
     initStars();
     drawStars(0);
