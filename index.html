@@ -10,8 +10,9 @@
 <meta name="theme-color" content="#0a0a0a">
 
 <!-- Favicon -->
-<link rel="icon" href="/assets/logo.jpeg" type="image/jpeg">
-<link rel="apple-touch-icon" href="/assets/logo.jpeg">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/logo.png" type="image/png" sizes="1024x1024">
+<link rel="apple-touch-icon" href="/assets/logo.png">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
@@ -19,7 +20,7 @@
 <meta property="og:title" content="Rikoukei Labs — Resilient Software, Systems &amp; Platforms">
 <meta property="og:description" content="Rikoukei Labs builds resilient, maintainable software and systems: custom app development, pipeline orchestration, and research tools built to last.">
 <meta property="og:url" content="https://www.rikoukeilabs.com/">
-<meta property="og:image" content="https://www.rikoukeilabs.com/assets/logo.jpeg">
+<meta property="og:image" content="https://www.rikoukeilabs.com/assets/logo.png">
 <meta property="og:image:alt" content="Rikoukei Labs logo">
 <meta property="og:locale" content="en_US">
 
@@ -27,7 +28,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Rikoukei Labs — Resilient Software, Systems &amp; Platforms">
 <meta name="twitter:description" content="Rikoukei Labs builds resilient, maintainable software and systems: custom app development, pipeline orchestration, and research tools built to last.">
-<meta name="twitter:image" content="https://www.rikoukeilabs.com/assets/logo.jpeg">
+<meta name="twitter:image" content="https://www.rikoukeilabs.com/assets/logo.png">
 <meta name="twitter:image:alt" content="Rikoukei Labs logo">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,7 +43,7 @@
   "@type": "Organization",
   "name": "Rikoukei Labs",
   "url": "https://www.rikoukeilabs.com/",
-  "logo": "https://www.rikoukeilabs.com/assets/logo.jpeg",
+  "logo": "https://www.rikoukeilabs.com/assets/logo.png",
   "description": "Rikoukei Labs builds resilient, maintainable software and systems: custom app development, pipeline orchestration, and research tools built to last.",
   "email": "swarn.sw@rikoukeilabs.com",
   "sameAs": [
@@ -74,7 +75,7 @@
 <!-- ========== NAV ========== -->
 <nav id="nav">
   <div class="nav-left">
-    <img src="assets/logo.jpeg" alt="Rikoukei Labs company logo" class="nav-logo" width="40" height="40">
+    <img src="assets/logo-mark.svg" alt="Rikoukei Labs company logo" class="nav-logo" width="40" height="40">
     <a href="#" class="nav-brand">Rikoukei Labs</a>
   </div>
   <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -256,6 +257,7 @@
 <footer>
   <a href="/privacy/" class="footer-link">Privacy Policy</a>
   <span class="footer-sep">&middot;</span>
+  <img src="assets/logo-mark.svg" alt="" class="footer-logo" width="16" height="16" aria-hidden="true">
   &copy; 2026 Rikoukei Labs.
 </footer>
 
@@ -401,6 +403,12 @@
 
   /* ========== CONCOURSE WARP TRANSITION ========== */
   var concourseCard = document.getElementById('concourse-card');
+
+  /* If the page is restored from the back/forward cache after warping to
+     Concourse, the overlay is still in the DOM. Clear it. */
+  window.addEventListener('pageshow', function () {
+    document.querySelectorAll('.warp-out').forEach(function (n) { n.remove(); });
+  });
 
   if (concourseCard) {
     concourseCard.addEventListener('click', function(e) {

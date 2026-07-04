@@ -703,6 +703,15 @@ footer {
   color: var(--grey-dim);
 }
 
+.footer-logo {
+  width: 16px;
+  height: 16px;
+  vertical-align: -3px;
+  margin-right: 6px;
+  filter: grayscale(1) brightness(1.7);
+  opacity: 0.75;
+}
+
 /* ========== CONTENT PAGES (privacy, errors) ========== */
 .page {
   position: relative;
